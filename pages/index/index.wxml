@@ -1,0 +1,31 @@
+<!--index.wxml-->
+<navigation-bar title="热梗百科" back="{{false}}" color="black" background="#FFF"></navigation-bar>
+<scroll-view class="scrollarea" scroll-y type="list">
+  <view class="container">
+    <!-- 上半部分：折线图 -->
+    <view class="chart-container">
+      <view class="chart-title">热梗热度趋势</view>
+      <ec-canvas id="mychart-dom-line" canvas-id="mychart-line" ec="{{ec}}"></ec-canvas>
+    </view>
+    
+    <!-- 下半部分：热榜 -->
+    <view class="hot-list-container">
+      <view class="hot-list-title">热梗TOP榜</view>
+      <view class="hot-list">
+        <block wx:for="{{hotList}}" wx:key="index">
+          <view class="hot-item">
+            <view class="hot-rank {{index < 3 ? 'hot-rank-top' : ''}}">{{index + 1}}</view>
+            <view class="hot-info">
+              <view class="hot-name">{{item.name}}</view>
+              <view class="hot-desc">{{item.desc}}</view>
+            </view>
+            <view class="hot-heat">
+              <text class="hot-heat-value">{{item.heat}}</text>
+              <text class="hot-heat-trend {{item.trend > 0 ? 'up' : (item.trend < 0 ? 'down' : '')}}">{{item.trend > 0 ? '+' : ''}}{{item.trend}}%</text>
+            </view>
+          </view>
+        </block>
+      </view>
+    </view>
+  </view>
+</scroll-view>
