@@ -1,0 +1,17 @@
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# 临时文件
+*.tmp
+*.log
+
+# IDE 文件
+.vscode/
+.idea/
+
+# 操作系统文件
+.DS_Store
+Thumbs.db
+
+# 微信小程序私有配置
+project.private.config.json 
