@@ -18,6 +18,10 @@
       "sdkVersionEnd": "15.255.255"
     }
   },
+  "usingComponents": {
+    "navigation-bar": "/components/navigation-bar/navigation-bar",
+    "ec-canvas": "/ec-canvas/ec-canvas"
+  },
   "componentFramework": "glass-easel",
   "sitemapLocation": "sitemap.json",
   "lazyCodeLoading": "requiredComponents"

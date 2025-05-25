@@ -1,0 +1,73 @@
+module.exports = {
+  "dates": [
+    "05月24日"
+  ],
+  "series": [
+    {
+      "name": "IG EDG",
+      "type": "line",
+      "smooth": true,
+      "data": [
+        100
+      ],
+      "symbol": "circle",
+      "symbolSize": 8,
+      "emphasis": {
+        "itemStyle": {
+          "borderWidth": 3
+        }
+      },
+      "endLabel": {
+        "show": true,
+        "formatter": "{a}",
+        "distance": 8,
+        "color": "#1890ff",
+        "fontSize": 14
+      }
+    },
+    {
+      "name": "UP主破防将起诉小米",
+      "type": "line",
+      "smooth": true,
+      "data": [
+        100
+      ],
+      "symbol": "circle",
+      "symbolSize": 8,
+      "emphasis": {
+        "itemStyle": {
+          "borderWidth": 3
+        }
+      },
+      "endLabel": {
+        "show": true,
+        "formatter": "{a}",
+        "distance": 8,
+        "color": "#ff4d4f",
+        "fontSize": 14
+      }
+    },
+    {
+      "name": "JOJO结局爆改全员存活",
+      "type": "line",
+      "smooth": true,
+      "data": [
+        100
+      ],
+      "symbol": "circle",
+      "symbolSize": 8,
+      "emphasis": {
+        "itemStyle": {
+          "borderWidth": 3
+        }
+      },
+      "endLabel": {
+        "show": true,
+        "formatter": "{a}",
+        "distance": 8,
+        "color": "#52c41a",
+        "fontSize": 14
+      }
+    }
+  ]
+}; 

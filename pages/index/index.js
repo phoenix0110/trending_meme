@@ -1,10 +1,6 @@
 // index.js
 import * as echarts from '../../ec-canvas/echarts';
-
-// 导入真实数据
-const hotListData = require('../../data/hot_list.json');
-const chartData = require('../../data/chart_data.json');
-const updateInfo = require('../../data/update_info.json');
+import dataLoader from '../../utils/data_loader';
 
 let chart = null;
 
@@ -16,6 +12,9 @@ function initChart(canvas, width, height, dpr) {
     devicePixelRatio: dpr
   });
   canvas.setChart(chart);
+
+  // 获取图表数据
+  const chartData = dataLoader.getChartData();
 
   const option = {
     color: ['#1890ff', '#ff4d4f', '#52c41a'],
@@ -89,24 +88,60 @@ Page({
     ec: {
       onInit: initChart
     },
-    hotList: hotListData,
-    updateInfo: updateInfo,
-    lastUpdateTime: updateInfo.last_update || '未知'
+    hotList: [],
+    updateInfo: {},
+    lastUpdateTime: '未知'
   },
   
-  onLoad() {
-    // 页面加载时的逻辑
-    console.log('热榜数据加载完成，共', this.data.hotList.length, '条数据');
-    console.log('最后更新时间:', this.data.lastUpdateTime);
+  async onLoad() {
+    try {
+      // 初始化数据
+      await dataLoader.initAllData();
+      
+      // 更新页面数据
+      this.setData({
+        hotList: dataLoader.getHotList(),
+        updateInfo: dataLoader.getUpdateInfo(),
+        lastUpdateTime: dataLoader.getUpdateInfo().last_update || '未知'
+      });
+      
+      console.log('热榜数据加载完成，共', this.data.hotList.length, '条数据');
+      console.log('最后更新时间:', this.data.lastUpdateTime);
+    } catch (error) {
+      console.error('加载数据失败:', error);
+      wx.showToast({
+        title: '数据加载失败',
+        icon: 'none'
+      });
+    }
   },
   
   // 刷新数据
-  onRefresh() {
-    wx.showToast({
-      title: '数据已是最新',
-      icon: 'success',
-      duration: 1000
+  async onRefresh() {
+    wx.showLoading({
+      title: '刷新中...'
     });
+    
+    try {
+      // 这里模拟网络刷新，实际项目中应该调用API
+      // 例如：const result = await dataLoader.loadLatestData('https://api.example.com/data');
+      
+      // 模拟刷新操作
+      setTimeout(() => {
+        wx.hideLoading();
+        wx.showToast({
+          title: '数据已是最新',
+          icon: 'success',
+          duration: 1000
+        });
+      }, 500);
+    } catch (error) {
+      wx.hideLoading();
+      wx.showToast({
+        title: '刷新失败',
+        icon: 'none'
+      });
+    }
   },
   
   // 查看梗详情
