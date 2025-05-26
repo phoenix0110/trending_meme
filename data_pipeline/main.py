@@ -1,6 +1,7 @@
 from collectors import MemeCollector
 from processor import MemeProcessor
 from storage import MemeStorage
+from data_converter import DataConverter
 from config import Config
 import os
 import logging
@@ -78,9 +79,22 @@ def run_pipeline(output_dir=None):
         history_update_result = storage.update_history_file()
         
         if daily_save_result and history_update_result:
-            logger.info("数据管道运行成功")
-            logger.info(f"所有文件已保存到: {Config.OUTPUT_BASE_DIR} 目录")
-            return True
+            logger.info("数据存储完成")
+            
+            # 4. 数据转换为小程序JS模块
+            logger.info("开始转换数据为小程序JS模块")
+            converter = DataConverter()
+            js_convert_result = converter.convert_and_save_js()
+            
+            if js_convert_result:
+                logger.info("JS模块转换成功")
+                logger.info("数据管道运行成功")
+                logger.info(f"所有文件已保存到: {Config.OUTPUT_BASE_DIR} 目录")
+                logger.info("小程序数据文件已更新到: ../data 目录")
+                return True
+            else:
+                logger.warning("JS模块转换失败，但数据管道主要流程已完成")
+                return True
         else:
             logger.error("数据存储过程出现错误")
             return False

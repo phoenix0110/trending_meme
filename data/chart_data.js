@@ -1,13 +1,17 @@
 module.exports = {
   "dates": [
-    "05月24日"
+    "05月24日",
+    "05月25日",
+    "05月26日"
   ],
   "series": [
     {
-      "name": "IG EDG",
+      "name": "WE晋级Cube泪洒现场",
       "type": "line",
       "smooth": true,
       "data": [
+        0,
+        0,
         100
       ],
       "symbol": "circle",
@@ -26,10 +30,12 @@ module.exports = {
       }
     },
     {
-      "name": "UP主破防将起诉小米",
+      "name": "IG EDG",
       "type": "line",
       "smooth": true,
       "data": [
+        100,
+        100,
         100
       ],
       "symbol": "circle",
@@ -48,10 +54,12 @@ module.exports = {
       }
     },
     {
-      "name": "JOJO结局爆改全员存活",
+      "name": "台风失踪了",
       "type": "line",
       "smooth": true,
       "data": [
+        0,
+        0,
         100
       ],
       "symbol": "circle",

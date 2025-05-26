@@ -143,6 +143,75 @@ class DataConverter:
         except:
             return "0"
     
+    def save_as_js_module(self, data, filename):
+        """将数据保存为JS模块文件"""
+        try:
+            js_content = f"module.exports = {json.dumps(data, ensure_ascii=False, indent=2)}; "
+            
+            js_file = os.path.join(self.output_dir, filename)
+            with open(js_file, 'w', encoding='utf-8') as f:
+                f.write(js_content)
+            
+            print(f"✅ 保存JS模块: {js_file}")
+            return True
+            
+        except Exception as e:
+            print(f"❌ 保存JS模块失败: {e}")
+            return False
+    
+    def convert_and_save_js(self):
+        """转换数据并保存为JS模块文件"""
+        print("开始数据转换为JS模块...")
+        
+        # 加载数据
+        df = self.load_latest_data()
+        if df is None:
+            print("❌ 无法加载数据，转换失败")
+            return False
+        
+        # 生成热榜数据
+        hot_list = self.generate_hot_list(df)
+        
+        # 生成图表数据
+        chart_data = self.generate_chart_data(df)
+        
+        # 生成更新信息
+        update_info = {
+            'last_update': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+            'data_count': len(df),
+            'latest_date': df['更新日期'].max() if not df.empty else 'N/A'
+        }
+        
+        # 保存为JS模块文件
+        try:
+            success_count = 0
+            
+            # 保存热榜数据
+            if self.save_as_js_module(hot_list, "hot_list.js"):
+                success_count += 1
+            
+            # 保存图表数据
+            if self.save_as_js_module(chart_data, "chart_data.js"):
+                success_count += 1
+            
+            # 保存更新信息
+            if self.save_as_js_module(update_info, "update_info.js"):
+                success_count += 1
+            
+            if success_count == 3:
+                print(f"✅ JS模块转换完成！")
+                print(f"   热榜数据: {os.path.join(self.output_dir, 'hot_list.js')}")
+                print(f"   图表数据: {os.path.join(self.output_dir, 'chart_data.js')}")
+                print(f"   更新信息: {os.path.join(self.output_dir, 'update_info.js')}")
+                return True
+            else:
+                print(f"❌ 部分文件保存失败，成功: {success_count}/3")
+                return False
+            
+        except Exception as e:
+            print(f"❌ 保存JS模块失败: {e}")
+            return False
+
     def convert_and_save(self):
         """转换数据并保存为JSON"""
         print("开始数据转换...")
